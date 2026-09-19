@@ -1,6 +1,6 @@
 import { ApiResponseDto } from "@/dtos/auth.dto";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+const API_BASE_URL = "";
 
 export class ApiClient {
   private static getToken(): string | null {
