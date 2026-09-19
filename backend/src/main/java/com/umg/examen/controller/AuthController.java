@@ -23,8 +23,8 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/auth")
 @Tag(
-    name = "Autenticación",
-    description = "Endpoints para inicio de sesión y gestión de sesión"
+        name = "Autenticación",
+        description = "Endpoints para inicio, renovación y cierre de sesión"
 )
 public class AuthController {
 
@@ -36,8 +36,8 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(
-        summary = "Iniciar sesión",
-        description = "Autentica al usuario y retorna los tokens JWT"
+            summary = "Iniciar sesión",
+            description = "Autentica al usuario y retorna los tokens JWT"
     )
     public ResponseEntity<ApiResponse<AuthResponse>> login(
             @Valid @RequestBody LoginRequest request
@@ -54,16 +54,14 @@ public class AuthController {
 
     @PostMapping("/refresh")
     @Operation(
-        summary = "Renovar token",
-        description = "Genera un nuevo token de acceso"
+            summary = "Renovar token",
+            description = "Genera un nuevo token de acceso mediante el Refresh Token"
     )
     public ResponseEntity<ApiResponse<AuthResponse>> refreshToken(
             @Valid @RequestBody RefreshTokenRequest request
     ) {
         AuthResponse authResponse =
-                authService.refreshToken(
-                        request.getRefreshToken()
-                );
+                authService.refreshToken(request.getRefreshToken());
 
         return ResponseEntity.ok(
                 ApiResponse.success(
@@ -73,27 +71,41 @@ public class AuthController {
         );
     }
 
+    @PostMapping("/logout")
+    @Operation(
+            summary = "Cerrar sesión",
+            description = "Sincroniza el cierre de sesión del frontend con el backend"
+    )
+    public ResponseEntity<ApiResponse<Void>> logout() {
+        System.out.println(
+                "[AUTH] Solicitud de cierre de sesión recibida por el backend."
+        );
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Sesión cerrada exitosamente",
+                        null
+                )
+        );
+    }
+
     @GetMapping("/me")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(
-        summary = "Obtener usuario actual",
-        description = "Retorna los datos del usuario autenticado"
+            summary = "Obtener usuario actual",
+            description = "Retorna los datos del usuario autenticado mediante el token JWT"
     )
     public ResponseEntity<ApiResponse<UserResponse>> getCurrentUser(
             Authentication authentication
     ) {
-        if (authentication == null
-                || !authentication.isAuthenticated()) {
-
-            return ResponseEntity.status(401).body(
-                    ApiResponse.error("No autenticado")
-            );
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity
+                    .status(401)
+                    .body(ApiResponse.error("No autenticado"));
         }
 
         UserResponse user =
-                authService.getCurrentUser(
-                        authentication.getName()
-                );
+                authService.getCurrentUser(authentication.getName());
 
         return ResponseEntity.ok(
                 ApiResponse.success(
