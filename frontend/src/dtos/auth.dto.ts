@@ -5,11 +5,16 @@ export interface LoginRequestDto {
 
 export interface AuthResponseDto {
   token: string;
+  refreshToken: string;
   type: string;
   username: string;
   fullName: string;
   email: string;
   roles: string[];
+}
+
+export interface RefreshTokenRequestDto {
+  refreshToken: string;
 }
 
 export interface UserResponseDto {

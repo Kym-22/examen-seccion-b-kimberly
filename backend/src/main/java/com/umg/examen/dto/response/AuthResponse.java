@@ -1,14 +1,17 @@
 package com.umg.examen.dto.response;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.List;
 
-@Schema(description = "Respuesta de autenticación con Token JWT")
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Respuesta de autenticación con tokens JWT")
 public class AuthResponse {
 
     @Schema(description = "Token de acceso JWT")
     private String token;
+
+    @Schema(description = "Token utilizado para renovar la sesión")
+    private String refreshToken;
 
     @Schema(description = "Tipo de token", example = "Bearer")
     private String type = "Bearer";
@@ -16,18 +19,35 @@ public class AuthResponse {
     @Schema(description = "Nombre de usuario", example = "admin")
     private String username;
 
-    @Schema(description = "Nombre completo del usuario", example = "Administrador del Sistema")
+    @Schema(
+        description = "Nombre completo del usuario",
+        example = "Administrador del Sistema"
+    )
     private String fullName;
 
-    @Schema(description = "Correo electrónico", example = "admin@umg.edu.gt")
+    @Schema(
+        description = "Correo electrónico",
+        example = "admin@umg.edu.gt"
+    )
     private String email;
 
-    @Schema(description = "Lista de roles asignados", example = "[\"ROLE_ADMIN\"]")
+    @Schema(
+        description = "Lista de roles asignados",
+        example = "[\"ROLE_ADMIN\"]"
+    )
     private List<String> roles;
 
-    public AuthResponse() {}
+    public AuthResponse() {
+    }
 
-    public AuthResponse(String token, String type, String username, String fullName, String email, List<String> roles) {
+    public AuthResponse(
+            String token,
+            String type,
+            String username,
+            String fullName,
+            String email,
+            List<String> roles
+    ) {
         this.token = token;
         this.type = type != null ? type : "Bearer";
         this.username = username;
@@ -42,6 +62,14 @@ public class AuthResponse {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
     public String getType() {

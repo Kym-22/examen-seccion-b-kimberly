@@ -1,49 +1,100 @@
-import { AuthResponseDto, UserResponseDto } from "@/dtos/auth.dto";
-import { AuthSession, User } from "@/entities/user.entity";
+import {
+  AuthResponseDto,
+  UserResponseDto,
+} from "@/dtos/auth.dto";
+import {
+  AuthSession,
+  User,
+} from "@/entities/user.entity";
 import { AuthMapper } from "@/mappers/auth.mapper";
 import { ApiClient } from "./api.client";
 
 export class AuthService {
-  static async login(credentials: { username: string; password: string }): Promise<AuthSession> {
-    const dto = AuthMapper.toLoginDto(credentials);
-    const response = await ApiClient.post<AuthResponseDto>("/api/auth/login", dto);
-    const session = AuthMapper.toSession(response.data);
+  static async login(credentials: {
+    username: string;
+    password: string;
+  }): Promise<AuthSession> {
+    const dto =
+      AuthMapper.toLoginDto(credentials);
+
+    const response =
+      await ApiClient.post<AuthResponseDto>(
+        "/api/auth/login",
+        dto
+      );
+
+    const session =
+      AuthMapper.toSession(response.data);
 
     if (typeof window !== "undefined") {
-      localStorage.setItem("token", session.token);
-      localStorage.setItem("user", JSON.stringify(session.user));
+      localStorage.setItem(
+        "token",
+        response.data.token
+      );
+
+      localStorage.setItem(
+        "refreshToken",
+        response.data.refreshToken
+      );
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(session.user)
+      );
+
+      console.log(
+        "[AUTH] Sesión iniciada. Access token y refresh token almacenados."
+      );
     }
 
     return session;
   }
 
   static async getCurrentUser(): Promise<User> {
-    const response = await ApiClient.get<UserResponseDto>("/api/auth/me");
-    return AuthMapper.toUserFromResponse(response.data);
+    const response =
+      await ApiClient.get<UserResponseDto>(
+        "/api/auth/me"
+      );
+
+    return AuthMapper.toUserFromResponse(
+      response.data
+    );
   }
 
   static logout(): void {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
       localStorage.removeItem("user");
     }
   }
 
   static getStoredSession(): AuthSession | null {
-    if (typeof window === "undefined") return null;
+    if (typeof window === "undefined") {
+      return null;
+    }
 
-    const token = localStorage.getItem("token");
-    const userStr = localStorage.getItem("user");
+    const token =
+      localStorage.getItem("token");
 
-    if (!token || !userStr) return null;
+    const userString =
+      localStorage.getItem("user");
+
+    if (!token || !userString) {
+      return null;
+    }
 
     try {
-      const user = JSON.parse(userStr) as User;
+      const user =
+        JSON.parse(userString) as User;
+
       return {
         token,
         user,
         isAuthenticated: true,
-        isAdmin: user.roles?.includes("ROLE_ADMIN") || false,
+        isAdmin:
+          user.roles?.includes("ROLE_ADMIN") ||
+          false,
       };
     } catch {
       return null;
