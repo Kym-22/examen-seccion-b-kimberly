@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="004-1-insert-initial-products" author="umg">
+        <insert tableName="products">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Laptop Pro 16 Ultra"/>
+            <column name="description" value="Portátil de alto rendimiento con procesador de última generación, 32GB RAM y 1TB SSD NVMe para desarrollo intensivo."/>
+            <column name="price" valueNumeric="1499.99"/>
+            <column name="stock" valueNumeric="15"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&amp;fit=crop&amp;w=800&amp;q=80"/>
+            <column name="category" value="Computación"/>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Monitor Curvo UltraWide 34"/>
+            <column name="description" value="Pantalla curva IPS con resolución WQHD, tasa de refresco de 144Hz y soporte HDR400 para máxima productividad."/>
+            <column name="price" valueNumeric="649.50"/>
+            <column name="stock" valueNumeric="25"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&amp;fit=crop&amp;w=800&amp;q=80"/>
+            <column name="category" value="Monitores"/>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Auriculares Inalámbricos Studio ANC"/>
+            <column name="description" value="Cancelación activa de ruido híbrida, audio de alta resolución y hasta 40 horas de batería continua."/>
+            <column name="price" valueNumeric="289.00"/>
+            <column name="stock" valueNumeric="40"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&amp;fit=crop&amp;w=800&amp;q=80"/>
+            <column name="category" value="Audio"/>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Teclado Mecánico RGB Custom"/>
+            <column name="description" value="Switches hot-swap lubricados, chasis de aluminio aeroespacial y conectividad inalámbrica tri-modo."/>
+            <column name="price" valueNumeric="159.99"/>
+            <column name="stock" valueNumeric="30"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&amp;fit=crop&amp;w=800&amp;q=80"/>
+            <column name="category" value="Accesorios"/>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" valueNumeric="5"/>
+            <column name="name" value="Mouse Ergonómico Precision Master"/>
+            <column name="description" value="Sensor óptico de 8000 DPI con scroll electromagnético y soporte para múltiples dispositivos simultáneos."/>
+            <column name="price" valueNumeric="99.90"/>
+            <column name="stock" valueNumeric="50"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&amp;fit=crop&amp;w=800&amp;q=80"/>
+            <column name="category" value="Accesorios"/>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" valueNumeric="6"/>
+            <column name="name" value="Smartwatch Fitness Pro Titanium"/>
+            <column name="description" value="Caja de titanio, sensor de oxígeno en sangre, ECG, GPS dual integrado y resistencia al agua 50m."/>
+            <column name="price" valueNumeric="349.00"/>
+            <column name="stock" valueNumeric="18"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&amp;fit=crop&amp;w=800&amp;q=80"/>
+            <column name="category" value="Wearables"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

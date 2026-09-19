@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Insert Roles -->
+    <changeSet id="002-1-insert-roles" author="umg">
+        <insert tableName="roles">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert Initial Users (admin / admin123, user / user123) -->
+    <!-- BCrypt hash for admin123: $2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW -->
+    <!-- BCrypt hash for user123:  $2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8. -->
+    <changeSet id="002-2-insert-users" author="umg">
+        <insert tableName="users">
+            <column name="id" valueNumeric="1"/>
+            <column name="username" value="admin"/>
+            <column name="password" value="$2a$10$sJLPmgj80xBBVDWerwFQf.l0zi/B6wNKBEO6tNJVYcAZMYyZ3iOnC"/>
+            <column name="full_name" value="Administrador del Sistema"/>
+            <column name="email" value="admin@umg.edu.gt"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="created_at" valueDate="now()"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="2"/>
+            <column name="username" value="user"/>
+            <column name="password" value="$2a$10$kg/0BFloJGYtIkwCgKMFveTDlog2LvatqrQK8iS4mAL9GLmBEcuGW"/>
+            <column name="full_name" value="Usuario Estándar"/>
+            <column name="email" value="user@umg.edu.gt"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="created_at" valueDate="now()"/>
+        </insert>
+    </changeSet>
+
+    <!-- Link Users with Roles -->
+    <changeSet id="002-3-link-user-roles" author="umg">
+        <insert tableName="user_roles">
+            <column name="user_id" valueNumeric="1"/>
+            <column name="role_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="user_id" valueNumeric="2"/>
+            <column name="role_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
